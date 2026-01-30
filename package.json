@@ -1,0 +1,65 @@
+{
+  "name": "@sjforge/feedback-widget",
+  "version": "0.3.0",
+  "description": "In-app feedback widget SDK with screenshots, annotations, and session recording",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "dist/cdn"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./electron-preload": {
+      "types": "./dist/electron-preload.d.ts",
+      "import": "./dist/electron-preload.mjs",
+      "require": "./dist/electron-preload.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts src/electron-preload.ts --format cjs,esm --dts --clean",
+    "build:cdn": "tsup src/cdn.ts --format iife --global-name FeedbackWidget --minify --outDir dist/cdn --clean",
+    "build:all": "npm run build && npm run build:cdn",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "test": "jest",
+    "lint": "eslint src/",
+    "prepublishOnly": "npm run build:all"
+  },
+  "keywords": [
+    "feedback",
+    "widget",
+    "bug-report",
+    "session-recording",
+    "screenshot",
+    "annotation"
+  ],
+  "author": "SJ Forge",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sjforge/feedback-widget"
+  },
+  "dependencies": {
+    "html2canvas": "^1.4.1",
+    "rrweb": "^2.0.0-alpha.13",
+    "pako": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/pako": "^2.0.3",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "eslint": "^9.0.0"
+  },
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
