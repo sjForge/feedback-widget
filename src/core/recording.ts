@@ -3,8 +3,7 @@
  * Records DOM events for replay
  */
 
-import { record } from 'rrweb';
-import type { recordOptions, eventWithTime } from 'rrweb/typings/types';
+import { record, type eventWithTime } from 'rrweb';
 import type { WidgetConfig } from '../types';
 
 export interface RecordingOptions {
@@ -75,7 +74,7 @@ const DEFAULT_BLOCK_SELECTORS = [
 export class SessionRecorder {
   private options: RecordingOptions;
   private events: eventWithTime[] = [];
-  private stopFn: (() => void) | null = null;
+  private stopFn: (() => void) | null | undefined = null;
   private state: RecordingState = {
     isRecording: false,
     isPaused: false,
@@ -130,8 +129,8 @@ export class SessionRecorder {
     ];
 
     // Configure rrweb recording
-    const recordConfig: recordOptions<eventWithTime> = {
-      emit: (event) => {
+    const recordConfig = {
+      emit: (event: eventWithTime) => {
         if (!this.state.isPaused) {
           this.events.push(event);
           this.state.eventCount = this.events.length;
